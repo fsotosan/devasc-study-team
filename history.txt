@@ -1,0 +1,313 @@
+devasc@labvm:~$ git config --global user.name "Fernando Soto"
+devasc@labvm:~$ git config --global user.email fernandojose.soto@gmail.com
+devasc@labvm:~$ git config --list
+user.name=Fernando Soto
+user.email=fernandojose.soto@gmail.com
+devasc@labvm:~$ cd labs/devnet-src/
+devasc@labvm:~/labs/devnet-src$ mkdir git-intro
+devasc@labvm:~/labs/devnet-src$ cd git-intro/
+devasc@labvm:~/labs/devnet-src/git-intro$ git init
+Initialized empty Git repository in /home/devasc/labs/devnet-src/git-intro/.git/
+devasc@labvm:~/labs/devnet-src/git-intro$ ls -a
+.  ..  .git
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "Estoy en camino para pasar el examen DEVASC de Cisco" > DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ ls -la
+total 16
+drwxrwxr-x  3 devasc devasc 4096 Nov  6 01:51 .
+drwxr-xr-x 15 devasc devasc 4096 Nov  6 01:49 ..
+-rw-rw-r--  1 devasc devasc   53 Nov  6 01:51 DEVASC.txt
+drwxrwxr-x  7 devasc devasc 4096 Nov  6 01:50 .git
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de Cisco
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	DEVASC.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Committing DEVASC.txt to begin tracking changes"
+[master (root-commit) ee48a39] Committing DEVASC.txt to begin tracking changes
+ 1 file changed, 1 insertion(+)
+ create mode 100644 DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ git log
+commit ee48a3965d9605fd8ee8bbc6fcc4ffdba9d1fad0 (HEAD -> master)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:52:36 2021 +0000
+
+    Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "Estoy empezando a enterder Git!" >> DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   DEVASC.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Agregada línea adicional al archivo"
+[master dcb2666] Agregada línea adicional al archivo
+ 1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$ git log
+commit dcb2666361ed3d2cc9b802c81eedbbeb50062135 (HEAD -> master)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:54:04 2021 +0000
+
+    Agregada línea adicional al archivo
+
+commit ee48a3965d9605fd8ee8bbc6fcc4ffdba9d1fad0
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:52:36 2021 +0000
+
+    Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$ git diff ee48a39 dcb2666 
+diff --git a/DEVASC.txt b/DEVASC.txt
+index 665c474..3d1011b 100644
+--- a/DEVASC.txt
++++ b/DEVASC.txt
+@@ -1 +1,2 @@
+ Estoy en camino para pasar el examen DEVASC de Cisco
++Estoy empezando a enterder Git!
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch feature
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+  feature
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout feature
+Switched to branch 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+* feature
+  master
+devasc@labvm:~/labs/devnet-src/git-intro$ echo "Este texto se agregó originalmente en la rama 'feature'" >> DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ git status
+On branch feature
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   DEVASC.txt
+
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Agregada una tercera línea en la rama 'feature'"
+[feature 20881fe] Agregada una tercera línea en la rama 'feature'
+ 1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$ git log
+commit 20881fed9ef51cf7f121848c7781f076e0551daa (HEAD -> feature)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:59:11 2021 +0000
+
+    Agregada una tercera línea en la rama 'feature'
+
+commit dcb2666361ed3d2cc9b802c81eedbbeb50062135 (master)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:54:04 2021 +0000
+
+    Agregada línea adicional al archivo
+
+commit ee48a3965d9605fd8ee8bbc6fcc4ffdba9d1fad0
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:52:36 2021 +0000
+
+    Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout master
+Switched to branch 'master'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+  feature
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$ git merge feature
+Updating dcb2666..20881fe
+Fast-forward
+ DEVASC.txt | 1 +
+ 1 file changed, 1 insertion(+)
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de Cisco
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch 
+  feature
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch -d feature 
+Deleted branch feature (was 20881fe).
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch 
+* master
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch test
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout test
+Switched to branch 'test'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+  master
+* test
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de Cisco
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ sed -i 's/Cisco/NetACad/'
+sed: no input files
+devasc@labvm:~/labs/devnet-src/git-intro$ sed -i 's/Cisco/NetACad/' DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de NetACad
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -a -m "Cambiar Cisco por NetACad"
+[test 74693d5] Cambiar Cisco por NetACad
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+devasc@labvm:~/labs/devnet-src/git-intro$ git checkout master
+Switched to branch 'master'
+devasc@labvm:~/labs/devnet-src/git-intro$ git branch
+* master
+  test
+devasc@labvm:~/labs/devnet-src/git-intro$ sed -i 's/Cisco/DevNet/' DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de DevNet
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -a -m "Cambiar Cisco por DevNet"
+[master 36aa9ad] Cambiar Cisco por DevNet
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+devasc@labvm:~/labs/devnet-src/git-intro$ git merge test
+Auto-merging DEVASC.txt
+CONFLICT (content): Merge conflict in DEVASC.txt
+Automatic merge failed; fix conflicts and then commit the result.
+devasc@labvm:~/labs/devnet-src/git-intro$ git log
+commit 36aa9ad9ca80eac1cf38870d15deee557e3db93e (HEAD -> master)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 02:05:00 2021 +0000
+
+    Cambiar Cisco por DevNet
+
+commit 20881fed9ef51cf7f121848c7781f076e0551daa
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:59:11 2021 +0000
+
+    Agregada una tercera línea en la rama 'feature'
+
+commit dcb2666361ed3d2cc9b802c81eedbbeb50062135
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:54:04 2021 +0000
+
+    Agregada línea adicional al archivo
+
+commit ee48a3965d9605fd8ee8bbc6fcc4ffdba9d1fad0
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:52:36 2021 +0000
+
+    Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+<<<<<<< HEAD
+Estoy en camino para pasar el examen DEVASC de DevNet
+=======
+Estoy en camino para pasar el examen DEVASC de NetACad
+>>>>>>> test
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ vim DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de DevNet
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro$ git add DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro$ git commit -m "Fusionada manualmente desde la rama 'test'"
+[master e33546e] Fusionada manualmente desde la rama 'test'
+devasc@labvm:~/labs/devnet-src/git-intro$ git log
+commit e33546e5953f848fe43274a94bc2145933a8f6ce (HEAD -> master)
+Merge: 36aa9ad 74693d5
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 02:07:43 2021 +0000
+
+    Fusionada manualmente desde la rama 'test'
+
+commit 36aa9ad9ca80eac1cf38870d15deee557e3db93e
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 02:05:00 2021 +0000
+
+    Cambiar Cisco por DevNet
+
+commit 74693d525fa3b4c5f9adf69f921a723e53c8e3a6 (test)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 02:03:45 2021 +0000
+
+    Cambiar Cisco por NetACad
+
+commit 20881fed9ef51cf7f121848c7781f076e0551daa
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:59:11 2021 +0000
+
+    Agregada una tercera línea en la rama 'feature'
+
+commit dcb2666361ed3d2cc9b802c81eedbbeb50062135
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:54:04 2021 +0000
+
+    Agregada línea adicional al archivo
+
+commit ee48a3965d9605fd8ee8bbc6fcc4ffdba9d1fad0
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 01:52:36 2021 +0000
+
+    Committing DEVASC.txt to begin tracking changes
+devasc@labvm:~/labs/devnet-src/git-intro$ mkdir devasc-study-team
+devasc@labvm:~/labs/devnet-src/git-intro$ cd devasc-study-team/
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ cp ../DEVASC.txt .
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ ls
+DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ cat DEVASC.txt 
+Estoy en camino para pasar el examen DEVASC de DevNet
+Estoy empezando a enterder Git!
+Este texto se agregó originalmente en la rama 'feature'
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git init
+Initialized empty Git repository in /home/devasc/labs/devnet-src/git-intro/devasc-study-team/.git/
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git config --list
+user.name=Fernando Soto
+user.email=fernandojose.soto@gmail.com
+core.repositoryformatversion=0
+core.filemode=true
+core.bare=false
+core.logallrefupdates=true
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git remote add origin https://github.com/fsotosan/devasc-study-team.git
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git remote --verbose
+origin	https://github.com/fsotosan/devasc-study-team.git (fetch)
+origin	https://github.com/fsotosan/devasc-study-team.git (push)
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git log
+fatal: your current branch 'master' does not have any commits yet
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git add DEVASC.txt 
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git commit -m "Add DEVASC.txt file to devasc-study-team"
+[master (root-commit) 9a320a7] Add DEVASC.txt file to devasc-study-team
+ 1 file changed, 3 insertions(+)
+ create mode 100644 DEVASC.txt
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git log
+commit 9a320a760dddae5e59e3c28bdc23b34bb28e1d78 (HEAD -> master)
+Author: Fernando Soto <fernandojose.soto@gmail.com>
+Date:   Sat Nov 6 02:13:00 2021 +0000
+
+    Add DEVASC.txt file to devasc-study-team
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git status
+On branch master
+nothing to commit, working tree clean
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$ git push origin master
+Username for 'https://github.com': fsotosan
+Password for 'https://fsotosan@github.com': 
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 359 bytes | 359.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/fsotosan/devasc-study-team.git
+ * [new branch]      master -> master
+devasc@labvm:~/labs/devnet-src/git-intro/devasc-study-team$
